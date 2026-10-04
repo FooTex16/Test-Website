@@ -1,0 +1,6 @@
+{
+  "name": "EduVerse — Semesta Belajar Interaktif SD",
+  "description": "Dunia belajar digital interaktif untuk anak SD kelas 1-6 dengan petualangan gamifikasi, 7 dunia kurikulum, mini games edukatif, pendamping AI Olu, dan EduVerse City.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

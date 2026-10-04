@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Quicksand", sans-serif;
+  --font-body: "Nunito Sans", sans-serif;
+
+  --color-primary: #00876b;
+  --color-primary-container: #00c49f;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #00382b;
+  --color-primary-fixed: #63fbd3;
+  --color-primary-fixed-dim: #3fdeb7;
+
+  --color-secondary: #632ce5;
+  --color-secondary-container: #7c4dff;
+  --color-secondary-fixed: #e8deff;
+  --color-on-secondary-fixed: #20005f;
+
+  --color-tertiary: #8a6500;
+  --color-tertiary-container: #dba500;
+  --color-tertiary-fixed: #ffdf9e;
+  --color-on-tertiary-fixed: #261a00;
+
+  --color-surface: #f4f7fe;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #edf2fd;
+  --color-surface-container: #e2eafb;
+  --color-surface-container-high: #d6e2f8;
+  --color-surface-container-highest: #cbd9f4;
+  --color-on-surface: #0f1a2a;
+  --color-on-surface-variant: #344356;
+  --color-outline: #64748b;
+  --color-outline-variant: #cbd5e1;
+
+  --color-error: #d92d20;
+  --color-error-container: #fee4e2;
+  --color-on-error-container: #7a1209;
+}
+
+/* Global Base */
+html {
+  font-family: var(--font-body);
+  scroll-behavior: smooth;
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+}
+
+/* Tactile 3D Buttons for Kids with Minimum 56px Touch Target */
+.btn-tactile-teal {
+  min-height: 56px;
+  background-color: #00c49f;
+  color: #00382b;
+  font-weight: 800;
+  border: 2px solid #009a7d;
+  box-shadow: 0 5px 0 #009a7d;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+.btn-tactile-teal:hover {
+  filter: brightness(1.05);
+}
+.btn-tactile-teal:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #009a7d;
+}
+
+.btn-tactile-purple {
+  min-height: 56px;
+  background-color: #632ce5;
+  color: #ffffff;
+  font-weight: 800;
+  border: 2px solid #4f00d0;
+  box-shadow: 0 5px 0 #4f00d0;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+.btn-tactile-purple:hover {
+  filter: brightness(1.05);
+}
+.btn-tactile-purple:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #4f00d0;
+}
+
+.btn-tactile-yellow {
+  min-height: 56px;
+  background-color: #ffdf9e;
+  color: #261a00;
+  font-weight: 800;
+  border: 2px solid #dba500;
+  box-shadow: 0 5px 0 #dba500;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+.btn-tactile-yellow:hover {
+  filter: brightness(1.05);
+}
+.btn-tactile-yellow:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #dba500;
+}
+
+.btn-tactile-white {
+  min-height: 56px;
+  background-color: #ffffff;
+  color: #632ce5;
+  font-weight: 800;
+  border: 2px solid #d6e2f8;
+  box-shadow: 0 5px 0 #d6e2f8;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+.btn-tactile-white:hover {
+  background-color: #edf2fd;
+}
+.btn-tactile-white:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #d6e2f8;
+}
+
+/* Custom Scrollbar for playful UI */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #edf2fd;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd9f4;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00c49f;
+}
+
+/* Floating animation for Olu Bot */
+@keyframes floatAnimation {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+.animate-float {
+  animation: floatAnimation 3.5s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(0, 196, 159, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(124, 77, 255, 0.6);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
