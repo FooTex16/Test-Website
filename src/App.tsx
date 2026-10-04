@@ -233,6 +233,8 @@ export default function App() {
         quests={quests}
         onUpdateQuests={handleUpdateQuests}
         onLogoutAdmin={handleLogout}
+        isDark={isDark}
+        onToggleDark={handleToggleDark}
       />
     );
   }

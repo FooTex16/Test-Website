@@ -54,7 +54,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action, username: user, password: pass }),
       });
-      if (relayRes.ok) {
+      const contentType = relayRes.headers.get('content-type') || '';
+      if (relayRes.ok && contentType.includes('application/json')) {
         const data = await relayRes.json();
         return data;
       }

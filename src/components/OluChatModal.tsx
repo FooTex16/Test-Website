@@ -23,22 +23,84 @@ const QUICK_QUESTIONS = [
 
 function getLocalOluAnswer(q: string): string {
   const query = q.toLowerCase();
+
+  // Matematika Dasar
+  const mathMatch = query.match(/(\d+)\s*([+\-*x/]|ditambah|dikurang|dikali|dibagi)\s*(\d+)/i);
+  if (mathMatch) {
+    const n1 = parseInt(mathMatch[1], 10);
+    const op = mathMatch[2].toLowerCase();
+    const n2 = parseInt(mathMatch[3], 10);
+    let result = 0;
+    let opName = '';
+    if (op === '+' || op === 'ditambah') {
+      result = n1 + n2;
+      opName = 'ditambah';
+    } else if (op === '-' || op === 'dikurang') {
+      result = n1 - n2;
+      opName = 'dikurangi';
+    } else if (op === '*' || op === 'x' || op === 'dikali') {
+      result = n1 * n2;
+      opName = 'dikali';
+    } else if (op === '/' || op === 'dibagi') {
+      result = n2 !== 0 ? Math.round((n1 / n2) * 100) / 100 : 0;
+      opName = 'dibagi';
+    }
+    return `Hasil perhitungan ${n1} ${opName} ${n2} adalah ${result}! 🧮 Kamu hebat sudah berani mencoba berhitung. Ingin Olu bantu hitung angka lainnya?`;
+  }
+
+  // Pecahan
+  if (query.includes('pecahan') || query.includes('setengah') || query.includes('seperempat')) {
+    return 'Bayangkan 1 loyang pizza dipotong menjadi 4 bagian sama besar: 1 potong itu nilainya 1/4 (seperempat)! Jika kamu makan 2 potong, artinya kamu sudah makan 2/4 atau 1/2 loyang! Mudah dibayangkan kan? 🍕😄';
+  }
+
+  // Sains & Alam
   if (query.includes('langit') || query.includes('biru')) {
-    return 'Cahaya matahari sebenarnya terdiri dari aneka warna pelangi! Udara di atmosfer bumi menyebarkan warna biru lebih kuat ke segala penjuru, sehingga saat siang hari langit kita terlihat biru indah! Di Galaksi Sains kita bisa membuat simulasi pelangi lho! 🌈✨';
+    return 'Cahaya matahari sebenarnya tersusun dari semua warna pelangi! Gas di atmosfer bumi menyebarkan warna biru lebih kuat ke segala penjuru, sehingga saat siang hari langit kita terlihat biru indah! Di Galaksi Sains kita bisa membuat simulasi pelangi lho! 🌈✨';
   }
-  if (query.includes('pecahan') || query.includes('takut') || query.includes('salah')) {
-    return 'Jangan pernah takut salah, Sahabat Cilik! Di EduVerse, salah itu bukti bahwa sirkuit petualangan kita sedang bertumbuh. Bayangkan 1 loyang pizza dipotong 4 bagian sama besar: 1 potong itu adalah 1/4 bagian yang lezat! Ayo kita coba bersama! 🍕😄';
+  if (query.includes('daun') || query.includes('hijau') || query.includes('pohon') || query.includes('fotosintesis')) {
+    return 'Daun berwarna hijau karena memiliki zat ajaib bernama klorofil! Klorofil bekerja seperti koki cilik pintar yang memasak makanan untuk tumbuhan menggunakan sinar matahari, air, dan udara lewat fotosintesis! 🍃☀️';
   }
-  if (query.includes('mars') || query.includes('planet')) {
-    return 'Planet Mars memiliki 2 bulan kecil bernama Phobos dan Deimos! Mars berwarna merah bata karena tanahnya mengandung banyak serbuk karat besi. Di sana juga ada gunung tertinggi di tata surya bernama Olympus Mons! 🪐🚀';
+  if (query.includes('mars') || query.includes('planet') || query.includes('tata surya') || query.includes('bintang')) {
+    return 'Tata surya kita memiliki 8 planet utama yang mengitari Matahari! Planet Mars berwarna merah jingga karena tanahnya kaya akan serbuk karat besi. Di sana juga ada gunung tertinggi di tata surya bernama Olympus Mons! 🪐🚀';
   }
-  if (query.includes('daun') || query.includes('hijau') || query.includes('pohon')) {
-    return 'Daun berwarna hijau karena memiliki zat ajaib bernama klorofil! Klorofil bekerja seperti koki cilik yang memasak makanan untuk tanaman menggunakan sinar matahari dan air lewat proses fotosintesis! 🍃☀️';
+  if (query.includes('pelangi') || query.includes('hujan')) {
+    return 'Pelangi terbentuk saat tetesan air hujan membiaskan dan memantulkan sinar matahari menjadi spektrum 7 warna: Me-Ji-Ku-Hi-Bi-Ni-U (Merah, Jingga, Kuning, Hijau, Biru, Nila, Ungu)! 🌧️🌈';
   }
-  if (query.includes('tata surya') || query.includes('bumi')) {
-    return 'Tata surya kita dipimpin oleh Matahari yang hangat, dikelilingi 8 planet istimewa: Merkurius, Venus, Bumi rumah kita, Mars, Jupiter yang raksasa, Saturnus bercincin emas, Uranus, dan Neptunus yang dingin membiru! 🌌🛸';
+  if (query.includes('penyu') || query.includes('boni') || query.includes('laut') || query.includes('ikan')) {
+    return 'Penyu seperti sahabat kita si Boni sangat menyukai laut yang bersih dan hangat bersuhu 27°C-29°C! Boni berenang melintasi samudera dari Raja Ampat dengan tempurung kuatnya. Mari kita jaga laut agar tidak kotor oleh plastik! 🐢🌊';
   }
-  return `Pertanyaan yang sangat bagus, Sahabat Penjelajah! Olu senang sekali dengan rasa ingin tahumu. Setiap kali kita bertanya dan mencari tahu, kita sedang membuka gerbang petualangan baru di EduVerse! Teruslah bereksplorasi ya! 🌟🤖`;
+  if (query.includes('dinosaurus') || query.includes('purba') || query.includes('fosil')) {
+    return 'Dinosaurus hidup jutaan tahun yang lalu pada zaman Mesozoikum! Ada T-Rex karnivora yang perkasa, Triceratops bertanduk tiga, dan Brachiosaurus yang lehernya sangat panjang untuk makan daun di puncak pohon! 🦖🦕';
+  }
+  if (query.includes('magnet') || query.includes('listrik')) {
+    return 'Magnet memiliki dua kutub istimewa: Kutub Utara dan Kutub Selatan! Jika kutub yang sama didekatkan, mereka akan saling tolak-menolak. Tapi jika kutub berbeda bertemu, mereka akan saling tarik-menarik dengan kuat! 🧲⚡';
+  }
+  if (query.includes('gunung') || query.includes('gempa') || query.includes('lahar')) {
+    return 'Di dalam perut bumi suhunya sangat panas sehingga batuan bisa meleleh menjadi magma! Saat tekanan di dalam bumi memuncak, magma itu keluar melalui kawah gunung berapi dan disebut lava! 🌋';
+  }
+
+  // Logika, Rasa Percaya Diri, dan Belajar
+  if (query.includes('takut') || query.includes('salah') || query.includes('bingung') || query.includes('susah') || query.includes('sulit')) {
+    return 'Jangan pernah takut salah, Sahabat Cilik! Di EduVerse, salah adalah tanda sirkuit petualanganmu sedang berkembang dan belajar hal baru. Penemu lampu, Thomas Edison, mencoba ribuan kali sebelum berhasil! Kamu pasti bisa! 💪🌟';
+  }
+  if (query.includes('malas') || query.includes('bosan') || query.includes('capek')) {
+    return 'Tidak apa-apa istirahat sejenak, Rekan Cilik! Minum segelas air putih, regangkan tanganmu ke atas, dan lihat ke luar jendela. Setelah energimu terisi lagi, ayo kita jelajahi misi seru berikutnya! 💧🌱';
+  }
+
+  // Budaya & Nusantara
+  if (query.includes('kancil') || query.includes('dongeng') || query.includes('cerita')) {
+    return 'Dongeng Kancil di Lembah Kata mengajarkan kita agar selalu menggunakan kecerdikan untuk membantu sesama, bukan untuk menjahili teman. Kamu bisa membaca cerita serunya di menu Cerita EduVerse! 📖🦊';
+  }
+  if (query.includes('pancasila') || query.includes('indonesia') || query.includes('budaya') || query.includes('garuda')) {
+    return 'Burung Garuda adalah lambang negara kita yang gagah! Di dadanya ada 5 perisai Pancasila, dan cakarnya menggenggam pita bertuliskan "Bhinneka Tunggal Ika", yang artinya berbeda-beda tetapi kita tetap bersatu rukun! 🇮🇩🏛️';
+  }
+
+  // Gamifikasi EduVerse
+  if (query.includes('spark') || query.includes('shard') || query.includes('kota') || query.includes('city')) {
+    return 'Kumpulkan Spark dan Star Shards dengan menyelesaikan misi harian di 7 Dunia Belajar! Shards bisa kamu pakai untuk membangun Menara Logika, Observatorium, dan Taman Sains di Kotaku! 🏙️💎';
+  }
+
+  return `Pertanyaan yang sangat cerdas, Sahabat Penjelajah! Olu senang sekali dengan rasa ingin tahumu tentang "${q}". Setiap kali kita penasaran dan bertanya, kita membuka gerbang pengetahuan baru di EduVerse! Ada lagi yang ingin kamu ketahui? 🌟🤖`;
 }
 
 export const OluChatModal: React.FC<OluChatModalProps> = ({
@@ -81,22 +143,53 @@ export const OluChatModal: React.FC<OluChatModalProps> = ({
     setIsLoading(true);
 
     try {
-      // Attempt backend endpoint if running, otherwise use rich curated knowledge fallback
       let reply = '';
+
+      // Tier 1: Try serverless /api/olu/chat
       try {
         const res = await fetch('/api/olu/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ question: text }),
         });
-        if (res.ok) {
+        const contentType = res.headers.get('content-type') || '';
+        if (res.ok && contentType.includes('application/json')) {
           const data = await res.json();
-          reply = data.reply;
+          if (data && data.reply) {
+            reply = data.reply;
+          }
         }
       } catch {
-        // Fallback to local response
+        // Continue to Tier 2
       }
 
+      // Tier 2: Try direct client-side Gemini if Vite env key exists
+      if (!reply) {
+        try {
+          const clientKey =
+            (import.meta as any).env?.VITE_GEMINI_API_KEY ||
+            (import.meta as any).env?.GEMINI_API_KEY;
+          if (clientKey && clientKey !== 'YOUR_GEMINI_API_KEY_HERE') {
+            const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${clientKey}`;
+            const gRes = await fetch(geminiUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                contents: [{ parts: [{ text: `Kamu adalah Olu, robot sahabat anak SD yang ramah, hangat, dan Socratic. Jawab pertanyaan anak usia SD ini dengan ceria, 2-3 kalimat: "${text}"` }] }],
+              }),
+            });
+            if (gRes.ok) {
+              const gData = await gRes.json();
+              const cand = gData.candidates?.[0]?.content?.parts?.[0]?.text;
+              if (cand) reply = cand.trim();
+            }
+          }
+        } catch {
+          // Continue to smart local knowledge
+        }
+      }
+
+      // Tier 3: High-quality smart curated knowledge base
       if (!reply) {
         reply = getLocalOluAnswer(text);
       }
@@ -108,7 +201,7 @@ export const OluChatModal: React.FC<OluChatModalProps> = ({
         ]);
         setIsLoading(false);
         playSoundEffect('hint');
-      }, 500);
+      }, 400);
     } catch {
       const fallback = getLocalOluAnswer(text);
       setMessages((prev) => [
@@ -125,9 +218,9 @@ export const OluChatModal: React.FC<OluChatModalProps> = ({
       aria-modal="true"
       className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 animate-in fade-in"
     >
-      <div className="relative w-full max-w-2xl h-[85vh] max-h-[700px] flex flex-col rounded-3xl bg-white border-4 border-surface-container-high shadow-[0_16px_0_#d6e2f8] overflow-hidden text-left">
+      <div className="relative w-full max-w-2xl h-[85vh] max-h-[700px] flex flex-col rounded-3xl bg-surface-container-lowest dark:bg-[#161f2e] border-4 border-surface-container-high dark:border-slate-700 shadow-[0_16px_0_#d6e2f8] dark:shadow-[0_16px_0_#0f172a] overflow-hidden text-left">
         {/* Header */}
-        <div className="p-4 sm:p-5 bg-gradient-to-r from-primary via-primary-container to-secondary text-white flex items-center justify-between shrink-0">
+        <div className="p-4 sm:p-5 bg-gradient-to-r from-primary via-primary-container to-secondary text-white flex items-center justify-between shrink-0 shadow-md">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-3xl animate-float">
               🤖
@@ -161,7 +254,7 @@ export const OluChatModal: React.FC<OluChatModalProps> = ({
         </div>
 
         {/* Chat Messages */}
-        <div className="p-4 sm:p-6 overflow-y-auto flex-1 flex flex-col gap-4 bg-surface-container-low/50">
+        <div className="p-4 sm:p-6 overflow-y-auto flex-1 flex flex-col gap-4 bg-surface-container-low/40 dark:bg-[#0d131f]/70">
           {messages.map((m, idx) => (
             <div
               key={idx}
@@ -183,24 +276,24 @@ export const OluChatModal: React.FC<OluChatModalProps> = ({
                 className={`p-4 rounded-3xl text-sm font-bold leading-relaxed shadow-sm ${
                   m.sender === 'kid'
                     ? 'bg-secondary text-white rounded-tr-xs'
-                    : 'bg-white text-on-surface border-2 border-surface-container-high rounded-tl-xs'
+                    : 'bg-surface-container-lowest dark:bg-[#1e293b] text-on-surface dark:text-slate-100 border-2 border-surface-container-high dark:border-slate-700 rounded-tl-xs'
                 }`}
               >
-                <p>{m.text}</p>
+                <p className="whitespace-pre-line">{m.text}</p>
 
                 {m.sender === 'olu' && (
-                  <div className="mt-2 pt-2 border-t border-surface-container-high flex items-center justify-between gap-2">
+                  <div className="mt-2 pt-2 border-t border-surface-container-high dark:border-slate-700/60 flex items-center justify-between gap-2">
                     <button
                       onClick={() => {
                         playSoundEffect('click');
                         playTTS(m.text);
                       }}
-                      className="inline-flex items-center gap-1 text-[11px] font-black text-primary hover:underline cursor-pointer"
+                      className="inline-flex items-center gap-1 text-[11px] font-black text-primary dark:text-teal-400 hover:underline cursor-pointer"
                     >
                       <span>🔊</span>
                       <span>Dengarkan Suara Olu</span>
                     </button>
-                    <span className="text-[10px] text-slate-400">{m.time}</span>
+                    <span className="text-[10px] text-slate-400 dark:text-slate-500">{m.time}</span>
                   </div>
                 )}
               </div>
@@ -212,7 +305,7 @@ export const OluChatModal: React.FC<OluChatModalProps> = ({
               <div className="w-10 h-10 rounded-2xl bg-primary-container flex items-center justify-center text-2xl animate-spin">
                 ⚙️
               </div>
-              <div className="p-3.5 rounded-2xl bg-white border border-surface-container text-xs font-black text-primary animate-pulse">
+              <div className="p-3.5 rounded-2xl bg-surface-container-lowest dark:bg-[#1e293b] border border-surface-container dark:border-slate-700 text-xs font-black text-primary dark:text-teal-400 animate-pulse">
                 Olu sedang berpikir dan menyiapkan jawaban terbaik... ✨
               </div>
             </div>
@@ -222,15 +315,15 @@ export const OluChatModal: React.FC<OluChatModalProps> = ({
         </div>
 
         {/* Quick Suggestion Chips */}
-        <div className="p-2 sm:px-4 bg-white border-t border-surface-container overflow-x-auto flex items-center gap-2 shrink-0">
-          <span className="text-[11px] font-black text-slate-500 shrink-0">
+        <div className="p-2 sm:px-4 bg-surface-container-lowest dark:bg-[#161f2e] border-t border-surface-container dark:border-slate-800 overflow-x-auto flex items-center gap-2 shrink-0">
+          <span className="text-[11px] font-black text-slate-500 dark:text-slate-400 shrink-0">
             Ide Tanya:
           </span>
           {QUICK_QUESTIONS.map((qq, i) => (
             <button
               key={i}
               onClick={() => handleSendMessage(qq)}
-              className="px-3 py-1 rounded-xl bg-surface-container-low hover:bg-surface-container text-[11px] font-extrabold text-on-surface-variant border border-surface-container whitespace-nowrap cursor-pointer transition-all"
+              className="px-3 py-1 rounded-xl bg-surface-container-low dark:bg-[#1f2a3e] hover:bg-surface-container text-[11px] font-extrabold text-on-surface-variant dark:text-slate-200 border border-surface-container dark:border-slate-700 whitespace-nowrap cursor-pointer transition-all"
             >
               {qq}
             </button>
@@ -238,7 +331,7 @@ export const OluChatModal: React.FC<OluChatModalProps> = ({
         </div>
 
         {/* Input Bar */}
-        <div className="p-3 sm:p-4 bg-white border-t border-surface-container flex items-center gap-2 shrink-0">
+        <div className="p-3 sm:p-4 bg-surface-container-lowest dark:bg-[#161f2e] border-t border-surface-container dark:border-slate-800 flex items-center gap-2 shrink-0">
           <input
             type="text"
             value={inputText}
@@ -247,7 +340,7 @@ export const OluChatModal: React.FC<OluChatModalProps> = ({
               if (e.key === 'Enter') handleSendMessage();
             }}
             placeholder="Tanyakan apa saja ke Olu (contoh: Mengapa ada pelangi?)..."
-            className="flex-1 px-4 py-3 rounded-2xl bg-surface-container-low border-2 border-surface-container focus:border-primary focus:outline-none text-sm font-bold text-on-surface"
+            className="flex-1 px-4 py-3 rounded-2xl bg-surface-container-low dark:bg-[#0f172a] border-2 border-surface-container dark:border-slate-700 focus:border-primary focus:outline-none text-sm font-bold text-on-surface dark:text-slate-100"
           />
 
           <button

@@ -111,16 +111,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         {/* Right Column: Interactive Visual Showcase */}
         <div className="flex-1 w-full max-w-md lg:max-w-none flex justify-center">
-          <div className="relative w-full max-w-lg p-6 sm:p-8 rounded-3xl bg-white border-4 border-surface-container-high shadow-[0_12px_0_#d6e2f8]">
+          <div className="relative w-full max-w-lg p-6 sm:p-8 rounded-3xl bg-surface-container-lowest dark:bg-[#161f2e] border-4 border-surface-container-high dark:border-slate-700 shadow-[0_12px_0_#d6e2f8] dark:shadow-[0_12px_0_#0f172a] transition-all">
             {/* Top Banner inside card */}
-            <div className="flex items-center justify-between pb-4 border-b border-surface-container-high">
+            <div className="flex items-center justify-between pb-4 border-b border-surface-container-high dark:border-slate-700">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-2xl bg-primary-container flex items-center justify-center text-2xl shadow-sm">
                   🧭
                 </div>
                 <div>
                   <h3 className="font-display font-black text-base text-on-surface">Peta Ekspedisi Harian</h3>
-                  <p className="text-xs font-bold text-primary">Status: Siap Meluncur</p>
+                  <p className="text-xs font-bold text-primary dark:text-teal-400">Status: Siap Meluncur</p>
                 </div>
               </div>
               <span className="px-3 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-black text-xs border border-tertiary-container">
@@ -130,22 +130,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Middle Feature Highlights */}
             <div className="grid grid-cols-2 gap-3 py-5">
-              <div className="p-3.5 rounded-2xl bg-surface-container-low border border-surface-container flex flex-col gap-1">
+              <div className="p-3.5 rounded-2xl bg-surface-container-low dark:bg-[#1f2a3e] border border-surface-container dark:border-slate-700 flex flex-col gap-1">
                 <span className="text-2xl">🧮</span>
                 <span className="font-display font-black text-sm text-on-surface">Pulau Numeria</span>
                 <span className="text-[11px] font-bold text-on-surface-variant">Pecahan Pizza &amp; Logika</span>
               </div>
-              <div className="p-3.5 rounded-2xl bg-surface-container-low border border-surface-container flex flex-col gap-1">
+              <div className="p-3.5 rounded-2xl bg-surface-container-low dark:bg-[#1f2a3e] border border-surface-container dark:border-slate-700 flex flex-col gap-1">
                 <span className="text-2xl">🔬</span>
                 <span className="font-display font-black text-sm text-on-surface">Galaksi Sains</span>
                 <span className="text-[11px] font-bold text-on-surface-variant">Daur Air &amp; Planet Mars</span>
               </div>
-              <div className="p-3.5 rounded-2xl bg-surface-container-low border border-surface-container flex flex-col gap-1">
+              <div className="p-3.5 rounded-2xl bg-surface-container-low dark:bg-[#1f2a3e] border border-surface-container dark:border-slate-700 flex flex-col gap-1">
                 <span className="text-2xl">📚</span>
                 <span className="font-display font-black text-sm text-on-surface">Lembah Kata</span>
                 <span className="text-[11px] font-bold text-on-surface-variant">Dongeng Kancil &amp; Kosakata</span>
               </div>
-              <div className="p-3.5 rounded-2xl bg-surface-container-low border border-surface-container flex flex-col gap-1">
+              <div className="p-3.5 rounded-2xl bg-surface-container-low dark:bg-[#1f2a3e] border border-surface-container dark:border-slate-700 flex flex-col gap-1">
                 <span className="text-2xl">🏙️</span>
                 <span className="font-display font-black text-sm text-on-surface">EduVerse City</span>
                 <span className="text-[11px] font-bold text-on-surface-variant">Bangun Kota Impianmu</span>
@@ -153,15 +153,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
 
             {/* Olu Floating Dialog Bubble */}
-            <div className="p-4 rounded-2xl bg-primary-fixed/40 border-2 border-primary-container flex items-center gap-3">
+            <div className="p-4 rounded-2xl bg-primary-fixed/30 dark:bg-primary-fixed/20 border-2 border-primary-container dark:border-teal-500/40 flex items-center gap-3">
               <div
                 onClick={onOpenOlu}
-                className="w-12 h-12 rounded-2xl bg-white border-2 border-primary-container flex items-center justify-center text-2xl shadow-xs cursor-pointer hover:scale-105 transition-transform shrink-0"
+                className="w-12 h-12 rounded-2xl bg-surface-container-lowest dark:bg-[#1e293b] border-2 border-primary-container flex items-center justify-center text-2xl shadow-xs cursor-pointer hover:scale-105 transition-transform shrink-0"
               >
                 🤖
               </div>
               <p className="text-xs font-bold text-on-surface leading-snug">
-                "Halo Sahabat Cilik! Aku <span className="font-black text-primary">Olu</span>. Klik aku jika kamu butuh bantuan atau ingin bertanya rahasia sains apa saja!"
+                "Halo Sahabat Cilik! Aku <span className="font-black text-primary dark:text-teal-400">Olu</span>. Klik aku jika kamu butuh bantuan atau ingin bertanya rahasia sains apa saja!"
               </p>
             </div>
           </div>

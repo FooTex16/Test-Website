@@ -150,6 +150,20 @@ h1, h2, h3, .font-display {
   box-shadow: 0 1px 0 #d6e2f8;
 }
 
+html.dark .btn-tactile-white {
+  background-color: #1c2333;
+  color: #c4b5fd;
+  border: 2px solid #2a3548;
+  box-shadow: 0 5px 0 #2a3548;
+}
+html.dark .btn-tactile-white:hover {
+  background-color: #212d3d;
+}
+html.dark .btn-tactile-white:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #2a3548;
+}
+
 /* Custom Scrollbar for playful UI */
 ::-webkit-scrollbar {
   width: 8px;

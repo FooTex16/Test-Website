@@ -147,7 +147,7 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           <div
-            className="flex items-center gap-1 px-2 py-1.5 rounded-full bg-[#ffebe6] text-[#c93b16] font-black text-xs border border-[#ffb4a2]"
+            className="flex items-center gap-1 px-2 py-1.5 rounded-full bg-[#ffebe6] dark:bg-[#3d140a] text-[#c93b16] dark:text-[#ff8a65] font-black text-xs border border-[#ffb4a2] dark:border-[#7a2712]"
             title="Streak Hari Belajar"
           >
             <span>🔥</span>
@@ -156,7 +156,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={() => { playSoundEffect('click'); onOpenMedals(); }}
-            className="p-1.5 rounded-xl bg-surface-container-low hover:bg-surface-container text-amber-600 border border-surface-container-high transition-colors cursor-pointer"
+            className="p-1.5 rounded-xl bg-surface-container-low hover:bg-surface-container text-amber-600 dark:text-amber-400 border border-surface-container-high transition-colors cursor-pointer"
             title="Medali"
           >
             <span className="text-base">🏅</span>
@@ -169,8 +169,9 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Dark Mode Toggle */}
           <button
             onClick={() => { playSoundEffect('click'); onToggleDark(); }}
-            className="p-2 rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface border border-surface-container-high transition-all cursor-pointer"
+            className="p-2 rounded-xl bg-surface-container-low hover:bg-surface-container text-amber-500 dark:text-amber-300 border border-surface-container-high transition-all cursor-pointer"
             title={isDark ? 'Ganti ke Tema Terang' : 'Ganti ke Tema Gelap'}
+            aria-label="Ganti Tema"
           >
             <span className="text-base leading-none">{isDark ? '☀️' : '🌙'}</span>
           </button>
@@ -183,11 +184,11 @@ export const Header: React.FC<HeaderProps> = ({
                 <span className="text-xs font-black text-on-surface truncate max-w-[80px]">
                   Kapten {authUsername}
                 </span>
-                <span className="text-[9px] font-bold text-primary leading-none">Cloud ☁️</span>
+                <span className="text-[9px] font-bold text-primary dark:text-teal-400 leading-none">Cloud ☁️</span>
               </div>
               <button
                 onClick={onLogout}
-                className="ml-1 px-1.5 py-0.5 rounded-lg bg-white hover:bg-rose-50 text-[9px] font-bold text-rose-600 border border-rose-200 cursor-pointer shrink-0"
+                className="ml-1 px-1.5 py-0.5 rounded-lg bg-white dark:bg-slate-900 hover:bg-rose-50 dark:hover:bg-rose-950/60 text-[9px] font-bold text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/60 cursor-pointer shrink-0"
                 title="Keluar"
               >
                 Keluar
@@ -207,11 +208,11 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={() => { playSoundEffect('click'); onOpenAdultGate(); }}
-            className="hidden lg:flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface-variant font-bold text-xs border-2 border-outline-variant shadow-[0_2px_0_#cbd5e1] active:translate-y-0.5 transition-all cursor-pointer"
+            className="hidden lg:flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface-variant font-bold text-xs border-2 border-outline-variant shadow-[0_2px_0_#cbd5e1] dark:shadow-none active:translate-y-0.5 transition-all cursor-pointer"
             title="Ruang Guru & Orang Tua"
           >
-            <span className="text-secondary text-sm">🔒</span>
-            <span className="font-black text-secondary whitespace-nowrap">Guru & Ortu</span>
+            <span className="text-secondary dark:text-purple-400 text-sm">🔒</span>
+            <span className="font-black text-secondary dark:text-purple-300 whitespace-nowrap">Guru & Ortu</span>
           </button>
 
           {/* Hamburger */}
@@ -230,13 +231,13 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="xl:hidden bg-surface-container-lowest border-b-2 border-surface-container-high px-4 py-4 shadow-xl flex flex-col gap-3 animate-in fade-in">
           {/* Mobile Points Strip */}
           <div className="flex items-center justify-around bg-surface-container-low p-2.5 rounded-2xl border border-surface-container">
-            <div className="flex items-center gap-1 font-black text-xs text-amber-800">
+            <div className="flex items-center gap-1 font-black text-xs text-amber-800 dark:text-amber-300">
               <span>✨</span><span>{profile.sparks} Spark</span>
             </div>
-            <div className="flex items-center gap-1 font-black text-xs text-teal-800">
+            <div className="flex items-center gap-1 font-black text-xs text-teal-800 dark:text-teal-300">
               <span>💎</span><span>{profile.starShards} Shards</span>
             </div>
-            <div className="flex items-center gap-1 font-black text-xs text-rose-700">
+            <div className="flex items-center gap-1 font-black text-xs text-rose-700 dark:text-rose-300">
               <span>🔥</span><span>{profile.streakDays}h</span>
             </div>
           </div>
@@ -270,7 +271,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center gap-2 pt-1 border-t border-surface-container">
             <button
               onClick={() => { onOpenMedals(); setMobileMenuOpen(false); }}
-              className="flex-1 py-2 rounded-xl bg-amber-50 text-amber-900 border border-amber-200 font-black text-xs text-center"
+              className="flex-1 py-2 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-amber-900 dark:text-amber-200 border border-amber-200 dark:border-amber-800 font-black text-xs text-center"
             >
               🏅 Medali
             </button>

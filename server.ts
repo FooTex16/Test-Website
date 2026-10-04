@@ -73,16 +73,31 @@ Karaktermu:
 - Keamanan Anak: Jangan pernah menanyakan nama asli lengkap, alamat rumah, nomor telepon, atau topik dewasa/berbahaya.
 - Jawaban ringkas: 2 hingga 4 kalimat bersahabat agar nyaman dibaca anak usia SD.`;
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-3.8-flash',
-      contents: `Pertanyaan anak: "${question}". Konteks petualangan: ${context || 'Dunia EduVerse SD'}. Jawablah dengan ramah dan memicu rasa ingin tahu!`,
-      config: {
-        systemInstruction,
-        temperature: 0.7,
-      },
-    });
+    const candidateModels = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+    let reply = '';
 
-    const reply = response.text || generateOluFallback(question);
+    for (const model of candidateModels) {
+      try {
+        const response = await ai.models.generateContent({
+          model,
+          contents: `Pertanyaan anak: "${question}". Konteks petualangan: ${context || 'Dunia EduVerse SD'}. Jawablah dengan ramah dan memicu rasa ingin tahu!`,
+          config: {
+            systemInstruction,
+            temperature: 0.7,
+          },
+        });
+        if (response.text) {
+          reply = response.text.trim();
+          break;
+        }
+      } catch (mErr: any) {
+        console.warn(`Model ${model} failed, trying next...`, mErr.message);
+      }
+    }
+
+    if (!reply) {
+      reply = generateOluFallback(question);
+    }
     return res.json({ reply, source: 'gemini-ai' });
   } catch (error) {
     console.error('Olu AI API error:', error);
