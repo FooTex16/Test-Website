@@ -37,10 +37,36 @@
   --color-on-error-container: #7a1209;
 }
 
+/* ===== DARK MODE OVERRIDES ===== */
+html.dark {
+  --color-surface: #0d1117;
+  --color-surface-container-lowest: #161b22;
+  --color-surface-container-low: #1c2333;
+  --color-surface-container: #212d3d;
+  --color-surface-container-high: #2a3548;
+  --color-surface-container-highest: #334155;
+  --color-on-surface: #e2e8f0;
+  --color-on-surface-variant: #94a3b8;
+  --color-outline: #475569;
+  --color-outline-variant: #334155;
+  --color-primary-fixed: #0f3d2e;
+  --color-on-primary-container: #63fbd3;
+  --color-secondary-fixed: #1e0a54;
+  --color-on-secondary-fixed: #ddd6fe;
+  --color-tertiary-fixed: #3a2800;
+  --color-on-tertiary-fixed: #ffdf9e;
+}
+
+html.dark body {
+  background-color: #0d1117;
+  color: #e2e8f0;
+}
+
 /* Global Base */
 html {
   font-family: var(--font-body);
   scroll-behavior: smooth;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3, .font-display {

@@ -64,6 +64,25 @@ export default function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [authUsername, setAuthUsername] = useState('Rara');
 
+  // Dark mode
+  const [isDark, setIsDark] = useState<boolean>(() => {
+    return localStorage.getItem('eduverse_dark_mode') === 'true';
+  });
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('eduverse_dark_mode', String(isDark));
+  }, [isDark]);
+
+  const handleToggleDark = () => {
+    playSoundEffect('click');
+    setIsDark((prev) => !prev);
+  };
+
   // Screen time tracking
   const [sessionMinutes, setSessionMinutes] = useState(0);
   const [screenTimeLimit, setScreenTimeLimit] = useState(25);
@@ -257,6 +276,8 @@ export default function App() {
           setIsAuthModalOpen(true);
         }}
         onLogout={handleLogout}
+        isDark={isDark}
+        onToggleDark={handleToggleDark}
       />
 
       <main className="w-full pt-20 flex-1">

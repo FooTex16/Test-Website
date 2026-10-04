@@ -167,12 +167,36 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         playSoundEffect('correct');
         playTTS(`Hore! Pendaftaran akun Kapten ${cleanUser} berhasil tersimpan di sistem EduVerse!`);
         setSuccessMessage('🎉 Pendaftaran Berhasil! Akunmu telah tersimpan. Silakan klik Masuk.');
-        
-        // Auto switch to login tab with prefilled username
+
+        // === Simpan user baru ke localStorage agar Admin Dashboard langsung melihatnya ===
+        try {
+          const today = new Date();
+          const dateStr = today.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+          const newUser = {
+            id: `usr-${Date.now()}`,
+            username: cleanUser,
+            registeredDate: dateStr,
+            totalSparks: 0,
+            totalShards: 0,
+            streakDays: 0,
+            status: 'active',
+            grade: 'Kelas 1 SD',
+          };
+          const savedUsers = localStorage.getItem('eduverse_admin_users');
+          const existingUsers = savedUsers ? JSON.parse(savedUsers) : [];
+          const alreadyExists = existingUsers.some((u: { username: string }) => u.username === cleanUser);
+          if (!alreadyExists) {
+            localStorage.setItem('eduverse_admin_users', JSON.stringify([...existingUsers, newUser]));
+          }
+        } catch { /* non-critical */ }
+        // ==================================================================================
+
+        // Auto switch to login tab
         setTimeout(() => {
           setActiveTab('login');
           setSuccessMessage(null);
         }, 1800);
+
       } else {
         playSoundEffect('hint');
         const msg =

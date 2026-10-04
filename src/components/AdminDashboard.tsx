@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Quest, QuestOption, RegisteredUser } from '../types';
 import { playSoundEffect, playTTS } from '../utils/audio';
 
@@ -16,6 +16,9 @@ const INITIAL_USERS: RegisteredUser[] = [
   { id: 'usr-5', username: 'SitiNurhaliza', registeredDate: '04 Okt 2026', totalSparks: 410, totalShards: 10, streakDays: 5, status: 'active', grade: 'Kelas 5 SD' },
 ];
 
+const GAS_ENDPOINT_URL =
+  'https://script.google.com/macros/s/AKfycbzKdfd9BvndyAVd_9CzdFt3vX3Rk37iGLqwkCPCVO8sQmiLNRtaVqzdsON66tJH2T92/exec';
+
 export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   quests,
   onUpdateQuests,
@@ -28,18 +31,61 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [selectedCategory, setSelectedCategory] = useState('Semua');
   const [userSearch, setUserSearch] = useState('');
 
-  // User management state
+  // User management state — initialized from localStorage; refreshed from GAS via syncUsers
   const [users, setUsers] = useState<RegisteredUser[]>(() => {
     const saved = localStorage.getItem('eduverse_admin_users');
     if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch {
-        return INITIAL_USERS;
-      }
+      try { return JSON.parse(saved); } catch { return INITIAL_USERS; }
     }
     return INITIAL_USERS;
   });
+  const [isSyncingUsers, setIsSyncingUsers] = useState(false);
+
+  const syncUsersFromSheets = useCallback(async (silent = false) => {
+    setIsSyncingUsers(true);
+    try {
+      // Try relay first
+      let data: RegisteredUser[] | null = null;
+      try {
+        const relayRes = await fetch('/api/auth/google-sheets?action=list_users', { method: 'GET' });
+        if (relayRes.ok) {
+          const json = await relayRes.json();
+          if (Array.isArray(json.users)) data = json.users;
+        }
+      } catch { /* fall through to direct */ }
+
+      if (!data) {
+        const url = new URL(GAS_ENDPOINT_URL);
+        url.searchParams.set('action', 'list_users');
+        const res = await fetch(url.toString());
+        const json = await res.json();
+        if (Array.isArray(json.users)) data = json.users;
+      }
+
+      if (data && data.length > 0) {
+        // Merge: GAS data takes priority; keep local-only entries
+        const gasUsernames = new Set(data.map((u: RegisteredUser) => u.username));
+        const localOnly = users.filter((u) => !gasUsernames.has(u.username));
+        const merged = [...data, ...localOnly];
+        setUsers(merged);
+        localStorage.setItem('eduverse_admin_users', JSON.stringify(merged));
+        if (!silent) showToast(`✅ Berhasil! ${data.length} akun tersinkronisasi dari Google Sheets.`);
+      } else {
+        if (!silent) showToast('ℹ️ Google Sheets kosong atau tidak ada akun baru.');
+      }
+    } catch (err) {
+      if (!silent) showToast('❌ Gagal menghubungi Google Sheets. Periksa jaringan.');
+    } finally {
+      setIsSyncingUsers(false);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Auto-sync on first mount
+  useEffect(() => {
+    syncUsersFromSheets(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Modal for Add/Edit Quest
   const [isQuestFormOpen, setIsQuestFormOpen] = useState(false);
@@ -534,13 +580,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   Total: {filteredUsers.length} Siswa Terdaftar
                 </span>
                 <button
-                  onClick={() => {
-                    playSoundEffect('correct');
-                    showToast('Data akun tersinkronisasi dengan database Google Sheets!');
-                  }}
-                  className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-black text-xs border border-slate-200 cursor-pointer"
+                  onClick={() => syncUsersFromSheets(false)}
+                  disabled={isSyncingUsers}
+                  className="px-3.5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 disabled:opacity-60 text-white font-black text-xs border border-purple-500 cursor-pointer flex items-center gap-1.5 transition-all"
                 >
-                  🔄 Sinkron Google Sheets
+                  <span className={isSyncingUsers ? 'animate-spin inline-block' : ''}>{isSyncingUsers ? '⏳' : '🔄'}</span>
+                  <span>{isSyncingUsers ? 'Menyinkron...' : 'Sinkron Google Sheets'}</span>
                 </button>
               </div>
             </div>
